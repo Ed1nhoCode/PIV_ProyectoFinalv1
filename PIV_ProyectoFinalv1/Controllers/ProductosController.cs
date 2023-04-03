@@ -95,9 +95,6 @@ namespace PIV_ProyectoFinalv1.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
-            {
                 try
                 {
                     _context.Update(producto);
@@ -115,7 +112,7 @@ namespace PIV_ProyectoFinalv1.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+           
             ViewData["IdCategoria"] = new SelectList(_context.CategoriaProductos, "IdCategoriaProducto", "IdCategoriaProducto", producto.IdCategoria);
             return View(producto);
         }

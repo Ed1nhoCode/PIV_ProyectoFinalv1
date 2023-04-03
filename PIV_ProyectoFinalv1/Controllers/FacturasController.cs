@@ -99,9 +99,7 @@ namespace PIV_ProyectoFinalv1.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
                     _context.Update(factura);
@@ -119,7 +117,7 @@ namespace PIV_ProyectoFinalv1.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            
             ViewData["IdCliente"] = new SelectList(_context.Clientes, "IdCliente", "IdCliente", factura.IdCliente);
             ViewData["IdPago"] = new SelectList(_context.ModoPagos, "IdPago", "IdPago", factura.IdPago);
             return View(factura);
