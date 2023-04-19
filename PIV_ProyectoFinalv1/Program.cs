@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PIV_ProyectoFinalv1.Models;
+using Microsoft.AspNetCore.Identity;
+using PIV_ProyectoFinalv2.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,13 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("PivPfProyectoFinalv1Context");
 builder.Services.AddDbContext<PivPfProyectoFinalv1Context>(x => x.UseSqlServer(connectionString));
+
+//Conexion del Login
+var connectionString2 = builder.Configuration.GetConnectionString("LoginContextConnection");
+builder.Services.AddDbContext<LoginContext>(x => x.UseSqlServer(connectionString2));
+
+builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<LoginContext>();
 
 var app = builder.Build();
 
@@ -23,11 +32,16 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints => {
+    endpoints.MapRazorPages();
+});
 
 app.Run();

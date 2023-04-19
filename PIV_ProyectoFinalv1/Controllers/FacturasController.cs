@@ -48,8 +48,8 @@ namespace PIV_ProyectoFinalv1.Controllers
         // GET: Facturas/Create
         public IActionResult Create()
         {
-            ViewData["IdCliente"] = new SelectList(_context.Clientes, "IdCliente", "IdCliente");
-            ViewData["IdPago"] = new SelectList(_context.ModoPagos, "IdPago", "IdPago");
+            ViewData["IdCliente"] = new SelectList(_context.Clientes, "IdCliente", "NombreCliente");
+            ViewData["IdPago"] = new SelectList(_context.ModoPagos, "IdPago", "TipoPago");
             return View();
         }
 
@@ -63,10 +63,10 @@ namespace PIV_ProyectoFinalv1.Controllers
 
                 _context.Add(factura);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "DetalleFacturas");
             
-            ViewData["IdCliente"] = new SelectList(_context.Clientes, "IdCliente", "IdCliente", factura.IdCliente);
-            ViewData["IdPago"] = new SelectList(_context.ModoPagos, "IdPago", "IdPago", factura.IdPago);
+            ViewData["IdCliente"] = new SelectList(_context.Clientes, "IdCliente", "NombreCliente", factura.IdCliente);
+            ViewData["IdPago"] = new SelectList(_context.ModoPagos, "IdPago", "TipoPago", factura.IdPago);
             return View(factura);
         }
 

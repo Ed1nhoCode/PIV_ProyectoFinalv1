@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,12 +45,14 @@ namespace PIV_ProyectoFinalv1.Controllers
 
             return View(detalleFactura);
         }
+        [HttpGet]
+
 
         // GET: DetalleFacturas/Create
         public IActionResult Create()
         {
             ViewData["IdFactura"] = new SelectList(_context.Facturas, "IdFactura", "IdFactura");
-            ViewData["IdProducto"] = new SelectList(_context.Productos, "IdProducto", "IdProducto");
+            ViewData["IdProducto"] = new SelectList(_context.Productos, "IdProducto", "Descripcion");
             return View();
         }
 
@@ -66,7 +69,7 @@ namespace PIV_ProyectoFinalv1.Controllers
                 return RedirectToAction(nameof(Index));
             
             ViewData["IdFactura"] = new SelectList(_context.Facturas, "IdFactura", "IdFactura", detalleFactura.IdFactura);
-            ViewData["IdProducto"] = new SelectList(_context.Productos, "IdProducto", "IdProducto", detalleFactura.IdProducto);
+            ViewData["IdProducto"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", detalleFactura.IdProducto);
             return View(detalleFactura);
         }
 

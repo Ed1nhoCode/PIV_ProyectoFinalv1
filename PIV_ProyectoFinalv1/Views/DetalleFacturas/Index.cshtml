@@ -13,39 +13,72 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
+                @Html.DisplayNameFor(model => model.IdFacturaNavigation.IdFactura)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Precio)
+                @Html.DisplayNameFor(model => model.IdFacturaNavigation.FechaFactura)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdFacturaNavigation)
+                @Html.DisplayNameFor(model => model.IdFacturaNavigation.IdPagoNavigation.TipoPago)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdProductoNavigation)
+                @Html.DisplayNameFor(model => model.IdProductoNavigation.IdProducto)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProductoNavigation.Descripcion)
+            </th>
+            <td>
+                @Html.DisplayName("Precio Unitario")
+            </td>
+            <th>
+                @Html.DisplayName("Subtotal")
+            </th>
+            <th>
+                @Html.DisplayName("Total")
+            </th>
+         
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdFacturaNavigation.IdFactura)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdProductoNavigation.IdProducto)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdFacturaNavigation.IdFactura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdFacturaNavigation.FechaFactura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdFacturaNavigation.IdPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProductoNavigation.IdProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProductoNavigation.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProductoNavigation.Precio)
+                </td>
+                <td>
+                    @{
+                        var subtotal = (Convert.ToInt32(item.Cantidad) * (Convert.ToInt32(item.IdProductoNavigation.Precio)));
+                    }
+                    @subtotal
+                </td>
+                <td>
+                    @{
+                        var total = Convert.ToDouble(subtotal) * 0.13;
+                    }
+                    @total
+                </td>
+                       
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdDetalleFact">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IdDetalleFact">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.IdDetalleFact">Delete</a>
+                
             </td>
         </tr>
 }

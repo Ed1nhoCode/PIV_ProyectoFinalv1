@@ -47,7 +47,7 @@ namespace PIV_ProyectoFinalv1.Controllers
         // GET: Productos/Create
         public IActionResult Create()
         {
-            ViewData["IdCategoria"] = new SelectList(_context.CategoriaProductos, "IdCategoriaProducto", "IdCategoriaProducto");
+            ViewData["IdCategoria"] = new SelectList(_context.CategoriaProductos, "IdCategoriaProducto", "NombreCategoria");
             return View();
         }
 
@@ -63,7 +63,7 @@ namespace PIV_ProyectoFinalv1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
-            ViewData["IdCategoria"] = new SelectList(_context.CategoriaProductos, "IdCategoriaProducto", "IdCategoriaProducto", producto.IdCategoria);
+            ViewData["IdCategoria"] = new SelectList(_context.CategoriaProductos, "IdCategoriaProducto", "NombreCategoria", producto.IdCategoria);
             return View(producto);
         }
 

@@ -1,0 +1,92 @@
+﻿@model PIV_ProyectoFinalv1.Models.Cliente
+@{
+    ViewData["Title"] = "actualizarCliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>actualizarCliente</h1>
+<br />
+<br />
+
+@if (ViewBag.ValorMensaje == 1)
+{
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Mensaje</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">@ViewBag.MensajeProceso</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    if (ViewBag.ValorMensaje == 0)
+    {
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Mensaje</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger">@ViewBag.MensajeProceso</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@using (Html.BeginForm("actualizarCliente", "Clientes", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-success btn-block btn-lg" value="Actualizar Persona" />
+            <br />
+            <input type="button" value="Volver" class="btn btn-default btn-block btn-lg" onclick="document.location.href ='@Url.Content("~/Clientes/Index")'" />
+        </div>
+        <div class="col-md-8">
+            @Html.HiddenFor(u => u.IdCliente)
+
+            @Html.LabelFor(u => u.NombreCliente)
+            @Html.TextBoxFor(u => u.NombreCliente, new { @class = "form-control" })
+            @Html.ValidationMessage("nombreCliente")
+            <br /><br />
+
+            @Html.LabelFor(u => u.Correo)
+            @Html.TextBoxFor(u => u.Correo, new { @class = "form-control" })
+            @Html.ValidationMessage("correoCliente")
+            <br /><br />
+
+            @Html.LabelFor(u => u.Direccion)
+            @Html.TextBoxFor(u => u.Direccion, new { @class = "form-control" })
+            @Html.ValidationMessage("direccionCliente")
+            <br /><br />
+
+            @Html.LabelFor(u => u.Telefono)
+            @Html.TextBoxFor(u => u.Telefono, new { @class = "form-control" })
+            @Html.ValidationMessage("telefonoCliente")
+            <br /><br />
+
+        </div>
+    </div>
+}
+@section scripts{
+    <script type="text/javascript">
+        $('#myModal').modal('show');
+    </script>
+}
+

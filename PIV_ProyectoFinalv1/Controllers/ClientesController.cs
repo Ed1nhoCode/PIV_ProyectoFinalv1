@@ -156,5 +156,76 @@ namespace PIV_ProyectoFinalv1.Controllers
         {
           return (_context.Clientes?.Any(e => e.IdCliente == id)).GetValueOrDefault();
         }
+
+        [HttpGet]
+        public ActionResult actualizarCliente(int id)
+        {
+            Cliente c = new Cliente();
+            using (_context)
+            {
+                var cliente = _context.Clientes.Find(id);
+                if (cliente != null)
+                {
+                    c.IdCliente = cliente.IdCliente;
+                    c.NombreCliente = cliente.NombreCliente;
+                    c.Correo = cliente.Correo;
+                    c.Direccion = cliente.Direccion;
+                    c.Telefono = cliente.Telefono;
+                }
+                return View(c);
+            }
+            
+        }
+   
+
+        public ActionResult actualizarCliente(Cliente client)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(client);
+                }
+
+                using (_context)
+                {
+
+                    var clientes = _context.Clientes.Find(client.IdCliente);
+                    
+                    
+                    if (clientes != null) {
+
+                        var direccion = clientes.Direccion;
+                        var telefono = clientes.Telefono;
+
+                        clientes.NombreCliente = client.NombreCliente;
+                        clientes.Correo = client.Correo;
+                        clientes.Direccion = direccion;
+                        clientes.Telefono = telefono;
+
+                        //db.Entry(per).State = System.Data.Entity.EntityState.Modified;                 
+
+                        _context.Entry(clientes).State = EntityState.Modified;
+
+                        _context.SaveChanges();
+
+                        ViewBag.ValorMensaje = 1;
+                        ViewBag.MensajeProceso = "Persona actualizada correctamente";
+                    }
+
+         
+
+                }
+
+
+                return View(client);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ValorMensaje = 0;
+                ViewBag.MensajeProceso = "Fallo al actualizar la persona" + ex;
+                return View(client);
+            }
+        }
     }
 }
